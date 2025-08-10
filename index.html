@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reindirizzamento...</title>
+
+  <!-- REDIRECT PRINCIPALE: cambia qui sotto -->
+  <meta http-equiv="refresh" content="0;url=https://www.google.com" />
+
+  <!-- FALLBACK JS (più robusto) -->
+  <script>
+    (function(){
+      var url = "https://www.google.com"; // cambia anche qui
+      try { window.location.replace(url); }
+      catch(e) { window.location.href = url; }
+    })();
+  </script>
+  <style>
+    body{font-family:system-ui,Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}
+    .msg{max-width:40ch;text-align:center;padding:1rem;}
+  </style>
+</head>
+<body>
+  <div class="msg">
+    <p>Se non vieni reindirizzato automaticamente, clicca <a href="https://www.google.com">qui</a>.</p>
+  </div>
+</body>
+</html>
