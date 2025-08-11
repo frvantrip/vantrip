@@ -4,11 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <script>
-    const VERSION = "v1.6";
-    const NUM_POSTS = 4;
+    const VERSION = "v1.7";
+    const NUM_POSTS = 3;
 
-    // Link diretto immagine profilo da Google Drive
-    const PROFILE_IMG = "https://onedrive.live.com/4ef64e3e-87b5-417b-a9ad-e0f86c18fdd9";
+    // Link raw immagini da GitHub
+    const LOGO_URL = "https://raw.githubusercontent.com/frvantrip/vantrip/main/ChatGPT%20Image%20Aug%2011%2C%202025%2C%2010_39_30%20AM.png";
+    const PROFILE_IMG = "https://raw.githubusercontent.com/frvantrip/vantrip/main/503943311_18511832164029310_7720758257894092751_n.jpg";
 
     const STORIES = [
         { img: PROFILE_IMG, username: "francescorotiroti" },
@@ -61,6 +62,7 @@
                 `;
             }
         }
+        document.getElementById('logo').src = LOGO_URL;
     });
 </script>
 <style>
@@ -69,6 +71,22 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
             sans-serif;
         background-color: #fafafa;
+    }
+    /* HEADER Instagram style */
+    header {
+        height: 50px;
+        background: white;
+        border-bottom: 1px solid #dbdbdb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    header img.logo {
+        height: 30px;
+        user-select: none;
     }
     /* STORIES */
     .stories-container {
@@ -164,9 +182,3 @@
         margin-top: 5px;
     }
 </style>
-</head>
-<body>
-    <div class="stories-container" id="stories"></div>
-    <div id="feed"></div>
-</body>
-</html>
