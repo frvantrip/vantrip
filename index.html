@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect</title>
+  <meta charset="UTF-8">
+  <!-- Meta tag per evitare la cache -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redirect in corso…</title>
 </head>
 <body>
-    <p>Reindirizzamento in corso...</p>
+  <p>Reindirizzamento in corso…</p>
 
-    <script>
-        // Imposta header no-cache (utile se aperto in locale o su server)
-        if (typeof Headers !== "undefined") {
-            try {
-                new Headers({
-                    "Cache-Control": "no-cache, no-store, must-revalidate",
-                    "Pragma": "no-cache",
-                    "Expires": "0"
-                });
-            } catch (e) {}
-        }
+  <script>
+    // Funzione per cancellare tutti i cookie visibili via JavaScript
+    function clearAllCookies() {
+      document.cookie.split(";").forEach(function(cookie) {
+        let name = cookie.split("=")[0].trim();
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+      });
+    }
 
-        // Aggiunge parametro random per evitare cache del browser
-        var targetUrl = "https://google.com";
-        var uniqueParam = "_t=" + new Date().getTime();
-        var separator = targetUrl.includes("?") ? "&" : "?";
-        window.location.replace(targetUrl + separator + uniqueParam);
-    </script>
+    // Pulisce i cookie
+    clearAllCookies();
+
+    // Prepara l'URL di destinazione con parametro univoco per evitare cache
+    var targetUrl = "https://www.facebook.com";
+    var uniqueParam = "_t=" + new Date().getTime();
+    var separator = targetUrl.includes("?") ? "&" : "?";
+    var finalUrl = targetUrl + separator + uniqueParam;
+
+    // Esegue il redirect (senza memorizzare nella cronologia del browser)
+    window.location.replace(finalUrl);
+  </script>
 </body>
 </html>
