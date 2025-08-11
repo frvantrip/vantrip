@@ -3,68 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<script>
-    const VERSION = "v1.7";
-    const NUM_POSTS = 3;
-
-    // Link raw immagini da GitHub
-    const LOGO_URL = "https://raw.githubusercontent.com/frvantrip/vantrip/main/ChatGPT%20Image%20Aug%2011%2C%202025%2C%2010_39_30%20AM.png";
-    const PROFILE_IMG = "https://raw.githubusercontent.com/frvantrip/vantrip/main/503943311_18511832164029310_7720758257894092751_n.jpg";
-
-    const STORIES = [
-        { img: PROFILE_IMG, username: "francescorotiroti" },
-        { img: "https://via.placeholder.com/150/00FF00/ffffff?text=S2", username: "story2" },
-        { img: "https://via.placeholder.com/150/0000FF/ffffff?text=S3", username: "story3" },
-        { img: "https://via.placeholder.com/150/FFFF00/000000?text=S4", username: "story4" }
-    ];
-
-    const POSTS = [
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ?playsinline=1&modestbranding=1&rel=0&showinfo=0", caption: "Questo è un video verticale di esempio 🎥" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ?playsinline=1&modestbranding=1&rel=0&showinfo=0", caption: "Altro video di esempio 📱" }
-    ];
-
-    document.addEventListener("DOMContentLoaded", () => {
-        document.title = "Instagram Clone - " + VERSION;
-
-        const storiesBar = document.getElementById("stories");
-        STORIES.forEach(story => {
-            storiesBar.innerHTML += `
-                <div class="story">
-                    <div class="story-img">
-                        <img src="${story.img}" alt="${story.username}" />
-                    </div>
-                    <div class="story-username">${story.username}</div>
-                </div>
-            `;
-        });
-
-        const feed = document.getElementById("feed");
-        feed.innerHTML = "";
-
-        for (let i = 0; i < NUM_POSTS && i < POSTS.length; i++) {
-            const post = POSTS[i];
-            if (post.video !== "#") {
-                feed.innerHTML += `
-                <div class="post">
-                    <div class="post-header">
-                        <img src="${PROFILE_IMG}" alt="Profile Picture" />
-                        <span class="post-username">francescorotiroti</span>
-                    </div>
-                    <div class="post-video">
-                        <iframe src="${post.video}" allowfullscreen></iframe>
-                    </div>
-                    <div class="post-footer">
-                        <div class="actions">❤️ 💬 ✈️</div>
-                        <div class="likes">1,024 likes</div>
-                        <div class="caption"><b>francescorotiroti</b> ${post.caption}</div>
-                    </div>
-                </div>
-                `;
-            }
-        }
-        document.getElementById('logo').src = LOGO_URL;
-    });
-</script>
+<title>v1.11</title>
 <style>
     body {
         margin: 0;
@@ -74,7 +13,7 @@
     }
     /* HEADER Instagram style */
     header {
-        height: 50px;
+        height: auto;
         background: white;
         border-bottom: 1px solid #dbdbdb;
         display: flex;
@@ -83,10 +22,16 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        padding: 2px 0;
+        margin: 0;
     }
     header img.logo {
-        height: 30px;
+        width: 100%;
+        max-height: 110px;
+        object-fit: contain;
         user-select: none;
+        margin: 0;
+        padding: 0;
     }
     /* STORIES */
     .stories-container {
@@ -156,7 +101,7 @@
     }
     .post-video {
         width: 100%;
-        aspect-ratio: 9/16;
+        aspect-ratio: 9 / 16;
         background: black;
     }
     iframe {
@@ -182,3 +127,114 @@
         margin-top: 5px;
     }
 </style>
+</head>
+<body>
+<header>
+    <img class="logo" id="logo" alt="Instagram Logo" />
+</header>
+
+<div class="stories-container" id="stories"></div>
+<div id="feed"></div>
+
+<script>
+    const VERSION = "v1.11";
+    const NUM_POSTS = 10;
+
+    const LOGO_URL = "https://raw.githubusercontent.com/frvantrip/vantrip/main/ChatGPT%20Image%20Aug%2011%2C%202025%2C%2010_39_30%20AM.png";
+    const PROFILE_IMG = "https://raw.githubusercontent.com/frvantrip/vantrip/main/503943311_18511832164029310_7720758257894092751_n.jpg";
+
+    const STORIES = [
+        { img: PROFILE_IMG, username: "francescorotiroti" },
+        { img: "https://raw.githubusercontent.com/frvantrip/vantrip/main/71220939_515093999283200_7680971730931679232_n.jpg", username: "letiziatzeni" },
+        { img: "https://raw.githubusercontent.com/frvantrip/vantrip/main/223438027_372216374596164_7152785948380089916_n.jpg", username: "roadsurfer" }
+    ];
+
+    const POSTS = [
+        {
+            video: "https://www.youtube.com/embed/aqz-KE-bpKQ?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 1 🎥"
+        },
+        {
+            video: "https://www.youtube.com/embed/5qap5aO4i9A?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 2 📱"
+        },
+        {
+            video: "https://www.youtube.com/embed/lX44CAz-JhU?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 3 🎬"
+        },
+        {
+            video: "https://www.youtube.com/embed/T9ZYTz89Pgo?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 4 🎞️"
+        },
+        {
+            video: "https://www.youtube.com/embed/0t8yqGUZY4g?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 5 🎥"
+        },
+        {
+            video: "https://www.youtube.com/embed/R1rOQHVJt9A?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 6 📹"
+        },
+        {
+            video: "https://www.youtube.com/embed/1ZYbU82GVz4?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 7 📺"
+        },
+        {
+            video: "https://www.youtube.com/embed/Z-E1S2bqA1w?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 8 🎦"
+        },
+        {
+            video: "https://www.youtube.com/embed/8OK8_tHeCIA?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 9 🎬"
+        },
+        {
+            video: "https://www.youtube.com/embed/aI7xKQ5_hsI?playsinline=1&modestbranding=1&rel=0&showinfo=0",
+            caption: "Video verticale di esempio 10 🎥"
+        }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.title = VERSION;
+
+        document.getElementById('logo').src = LOGO_URL;
+
+        const storiesBar = document.getElementById("stories");
+        STORIES.forEach(story => {
+            storiesBar.innerHTML += `
+                <div class="story">
+                    <div class="story-img">
+                        <img src="${story.img}" alt="${story.username}" />
+                    </div>
+                    <div class="story-username">${story.username}</div>
+                </div>
+            `;
+        });
+
+        const feed = document.getElementById("feed");
+        feed.innerHTML = "";
+
+        for (let i = 0; i < NUM_POSTS && i < POSTS.length; i++) {
+            const post = POSTS[i];
+            if (post.video !== "#") {
+                const randomLikes = Math.floor(Math.random() * (5000 - 500 + 1)) + 500;
+                feed.innerHTML += `
+                <div class="post">
+                    <div class="post-header">
+                        <img src="${PROFILE_IMG}" alt="Profile Picture" />
+                        <span class="post-username">francescorotiroti</span>
+                    </div>
+                    <div class="post-video">
+                        <iframe src="${post.video}" allowfullscreen></iframe>
+                    </div>
+                    <div class="post-footer">
+                        <div class="actions">❤️ 💬 ✈️</div>
+                        <div class="likes">${randomLikes.toLocaleString()} likes</div>
+                        <div class="caption"><b>francescorotiroti</b> ${post.caption}</div>
+                    </div>
+                </div>
+                `;
+            }
+        }
+    });
+</script>
+</body>
+</html>
