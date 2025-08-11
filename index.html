@@ -1,29 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Reindirizzamento...</title>
-
-  <!-- REDIRECT PRINCIPALE: cambia qui sotto -->
-  <meta http-equiv="refresh" content="0;url=https://www.facebook.com" />
-
-  <!-- FALLBACK JS (più robusto) -->
-  <script>
-    (function(){
-      var url = "https://www.facebook.com"; // cambia anche qui
-      try { window.location.replace(url); }
-      catch(e) { window.location.href = url; }
-    })();
-  </script>
-  <style>
-    body{font-family:system-ui,Arial,Helvetica,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;}
-    .msg{max-width:40ch;text-align:center;padding:1rem;}
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect</title>
 </head>
 <body>
-  <div class="msg">
-    <p>Se non vieni reindirizzato automaticamente, clicca <a href="https://www.facebook.com">qui</a>.</p>
-  </div>
+    <p>Reindirizzamento in corso...</p>
+
+    <script>
+        // Imposta header no-cache (utile se aperto in locale o su server)
+        if (typeof Headers !== "undefined") {
+            try {
+                new Headers({
+                    "Cache-Control": "no-cache, no-store, must-revalidate",
+                    "Pragma": "no-cache",
+                    "Expires": "0"
+                });
+            } catch (e) {}
+        }
+
+        // Aggiunge parametro random per evitare cache del browser
+        var targetUrl = "https://google.com";
+        var uniqueParam = "_t=" + new Date().getTime();
+        var separator = targetUrl.includes("?") ? "&" : "?";
+        window.location.replace(targetUrl + separator + uniqueParam);
+    </script>
 </body>
 </html>
