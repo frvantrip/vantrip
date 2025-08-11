@@ -1,15 +1,63 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Instagram Clone - Francesco Rotiroti</title>
+<script>
+    /* ===== SETTINGS ===== */
+    const VERSION = "v1.1"; // Cambia versione
+    const NUM_POSTS = 2;    // Numero di post visibili
+
+    const PROFILE_IMG = "https://scontent-mxp2-1.cdninstagram.com/v/t51.2885-19/503943311_18511832164029310_7720758257894092751_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-mxp2-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QGiYAraJLRL4BZAzZv6OPzWzbHUFI3cWeiLCDKRDbVRlCtM0roNqjfsZHxwjlS8qZ4&_nc_ohc=FnqJj_gd1XIQ7kNvwEiHyIe&_nc_gid=MpmPyPjgvCZtQzSA74caVQ&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfWHZETlJw7rPeZcpoQzqR6o_St7beBy6z03FEF9b3s3zw&oe=689F904D&_nc_sid=7d3ac5";
+
+    const POSTS = [
+        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ?playsinline=1&modestbranding=1&rel=0&showinfo=0", caption: "Questo è un video verticale di esempio 🎥" },
+        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ?playsinline=1&modestbranding=1&rel=0&showinfo=0", caption: "Altro video di esempio 📱" },
+        { video: "#", caption: "Post 3" },
+        { video: "#", caption: "Post 4" },
+        { video: "#", caption: "Post 5" },
+        { video: "#", caption: "Post 6" },
+        { video: "#", caption: "Post 7" },
+        { video: "#", caption: "Post 8" },
+        { video: "#", caption: "Post 9" },
+        { video: "#", caption: "Post 10" }
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.title = "Instagram Clone - " + VERSION;
+
+        const feed = document.getElementById("feed");
+        feed.innerHTML = "";
+
+        for (let i = 0; i < NUM_POSTS && i < POSTS.length; i++) {
+            const post = POSTS[i];
+            if (post.video !== "#") {
+                feed.innerHTML += `
+                <div class="post">
+                    <div class="post-header">
+                        <img src="${PROFILE_IMG}" alt="Profile Picture">
+                        <span class="post-username">francescorotiroti</span>
+                    </div>
+                    <div class="post-video">
+                        <iframe src="${post.video}" allowfullscreen></iframe>
+                    </div>
+                    <div class="post-footer">
+                        <div class="actions">❤️ 💬 ✈️</div>
+                        <div class="likes">1,024 likes</div>
+                        <div class="caption"><b>francescorotiroti</b> ${post.caption}</div>
+                    </div>
+                </div>
+                `;
+            }
+        }
+    });
+</script>
 <style>
     body {
         margin: 0;
+        padding-bottom: 60px; /* spazio per navbar */
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background-color: #fafafa;
-        padding-bottom: 60px; /* spazio per navbar */
     }
     .post {
         background: white;
@@ -59,75 +107,35 @@
         font-size: 14px;
         margin-top: 5px;
     }
-    /* navbar in basso */
-    .bottom-nav {
+    /* Navbar stile Instagram */
+    .navbar {
         position: fixed;
         bottom: 0;
         left: 0;
-        width: 100%;
+        right: 0;
+        height: 50px;
         background: white;
         border-top: 1px solid #dbdbdb;
         display: flex;
         justify-content: space-around;
         align-items: center;
-        height: 50px;
-        font-size: 22px;
+        font-size: 24px;
+    }
+    .navbar span {
+        cursor: pointer;
     }
 </style>
 </head>
 <body>
-
-<script>
-    /* ===== CONFIGURAZIONE ===== */
-    const NUM_POSTS = 1; // Cambia qui per mostrare 1-10 post
-
-    const PROFILE_IMG = "https://scontent-mxp2-1.cdninstagram.com/v/t51.2885-19/503943311_18511832164029310_7720758257894092751_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-mxp2-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QGiYAraJLRL4BZAzZv6OPzWzbHUFI3cWeiLCDKRDbVRlCtM0roNqjfsZHxwjlS8qZ4&_nc_ohc=FnqJj_gd1XIQ7kNvwEiHyIe&_nc_gid=MpmPyPjgvCZtQzSA74caVQ&edm=ALGbJPMBAAAA&ccb=7-5&oh=00_AfWHZETlJw7rPeZcpoQzqR6o_St7beBy6z03FEF9b3s3zw&oe=689F904D&_nc_sid=7d3ac5";
-
-    const posts = [
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ", caption: "Questo è un video verticale di esempio 🎥" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", caption: "Post numero 2 😎" },
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ", caption: "Post numero 3 🎬" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", caption: "Post numero 4 🚀" },
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ", caption: "Post numero 5 🔥" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", caption: "Post numero 6 🎯" },
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ", caption: "Post numero 7 🌊" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", caption: "Post numero 8 🍕" },
-        { video: "https://www.youtube.com/embed/aqz-KE-bpKQ", caption: "Post numero 9 🏝️" },
-        { video: "https://www.youtube.com/embed/dQw4w9WgXcQ", caption: "Post numero 10 🐾" }
-    ];
-</script>
-
-<!-- Feed -->
 <div id="feed"></div>
 
-<!-- Navbar -->
-<div class="bottom-nav">
-    🏠 🔍 ➕ 🎥 👤
+<!-- Barra di navigazione -->
+<div class="navbar">
+    <span>🏠</span>
+    <span>🔍</span>
+    <span>➕</span>
+    <span>❤️</span>
+    <span>👤</span>
 </div>
-
-<script>
-    const feed = document.getElementById("feed");
-    for (let i = 0; i < NUM_POSTS && i < posts.length; i++) {
-        const post = posts[i];
-        const postHTML = `
-        <div class="post">
-            <div class="post-header">
-                <img src="${PROFILE_IMG}" alt="Profile Picture">
-                <span class="post-username">francescorotiroti</span>
-            </div>
-            <div class="post-video">
-                <iframe src="${post.video}?playsinline=1&modestbranding=1&rel=0&showinfo=0" allowfullscreen></iframe>
-            </div>
-            <div class="post-footer">
-                <div class="actions">❤️ 💬 ✈️</div>
-                <div class="likes">${Math.floor(Math.random()*900+100)} likes</div>
-                <div class="caption"><b>francescorotiroti</b> ${post.caption}</div>
-            </div>
-        </div>
-        `;
-        feed.innerHTML += postHTML;
-    }
-</script>
-
 </body>
 </html>
