@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,26 +10,6 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         background-color: #fafafa;
     }
-    /* Header stile IG */
-    .header {
-        background: white;
-        border-bottom: 1px solid #dbdbdb;
-        padding: 10px 15px;
-        display: flex;
-        align-items: center;
-    }
-    .profile-pic {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        margin-right: 10px;
-        border: 2px solid #ff0066;
-    }
-    .username {
-        font-weight: 600;
-        font-size: 14px;
-    }
-    /* Post */
     .post {
         background: white;
         border: 1px solid #dbdbdb;
@@ -51,7 +31,6 @@
         font-weight: 600;
         font-size: 14px;
     }
-    /* Video */
     .post-video {
         width: 100%;
         aspect-ratio: 9/16;
@@ -62,7 +41,6 @@
         height: 100%;
         border: none;
     }
-    /* Footer del post */
     .post-footer {
         padding: 10px;
     }
@@ -84,32 +62,8 @@
 </head>
 <body>
 
-<!-- Header -->
-<div class="header">
-    <img class="profile-pic" src="https://i.imgur.com/6QKZbCl.jpg" alt="Profile Picture">
-    <span class="username">francescorotiroti</span>
-</div>
+<script>
+    /* ===== CONFIGURAZIONE FACILE ===== */
+    const NUM_POSTS = 1; // Cambia qui: quanti post mostrare (1-10)
 
-<!-- Post -->
-<div class="post">
-    <!-- Post header -->
-    <div class="post-header">
-        <img src="https://i.imgur.com/6QKZbCl.jpg" alt="Profile Picture">
-        <span class="post-username">francescorotiroti</span>
-    </div>
-    <!-- Video verticale -->
-    <div class="post-video">
-        <iframe src="https://www.youtube.com/embed/aqz-KE-bpKQ?playsinline=1&modestbranding=1&rel=0&showinfo=0&autoplay=0" allowfullscreen></iframe>
-    </div>
-    <!-- Footer -->
-    <div class="post-footer">
-        <div class="actions">
-            ❤️ 💬 ✈️
-        </div>
-        <div class="likes">1,024 likes</div>
-        <div class="caption"><b>francescorotiroti</b> Questo è un video verticale di esempio 🎥</div>
-    </div>
-</div>
-
-</body>
-</html>
+    const PROFILE_IMG = "https://scontent-mxp2-1.cdninstagram.com/v/t51.2885-19/503943311_18511832164029310_7720758257894092751_n.jpg?efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=scontent-mxp2-1.cdninstagram.com&_nc_cat=110&_nc_oc=Q6cZ2QGiYAraJLRL4BZAzZv6OPzWzbHUFI3cWeiLCDKRDbVRlCtM0roNqjfsZHxwjlS8qZ4&_nc_ohc=FnqJj_gd1XIQ7kNvwEiHyIe&_nc_gid=MpmPyPjgvCZtQzSA74caVQ&edm=ALGbJPMBAAAA&ccb=_
