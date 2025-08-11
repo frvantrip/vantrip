@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=420, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>v1.11</title>
 <style>
     body {
@@ -10,6 +10,16 @@
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
             sans-serif;
         background-color: #fafafa;
+        display: flex;
+        justify-content: center;
+    }
+    #container {
+        width: 420px; /* larghezza fissa per simulare mobile */
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        background: white;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
     /* HEADER Instagram style */
     header {
@@ -129,12 +139,14 @@
 </style>
 </head>
 <body>
+<div id="container">
 <header>
     <img class="logo" id="logo" alt="Instagram Logo" />
 </header>
 
 <div class="stories-container" id="stories"></div>
 <div id="feed"></div>
+</div>
 
 <script>
     const VERSION = "v1.11";
