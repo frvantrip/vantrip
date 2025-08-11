@@ -1,37 +1,140 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <!-- Meta tag per evitare la cache -->
+  <meta charset="utf-8">
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Redirect in corso…</title>
 </head>
 <body>
   <p>Reindirizzamento in corso…</p>
 
-  <script>
-    // Funzione per cancellare tutti i cookie visibili via JavaScript
-    function clearAllCookies() {
-      document.cookie.split(";").forEach(function(cookie) {
-        let name = cookie.split("=")[0].trim();
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+<script>
+(async function(){
+  // Utility per sleep
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+
+  // 1) CLEAR storages
+  try { localStorage.clear(); } catch(e) { console.warn('localStorage.clear failed', e); }
+  try { sessionStorage.clear(); } catch(e) { console.warn('sessionStorage.clear failed', e); }
+
+  // 2) Clear IndexedDB (se supportato)
+  try {
+    if (indexedDB && indexedDB.databases) {
+      const dbs = await indexedDB.databases();
+      await Promise.all(dbs.map(db => new Promise(res => {
+        if (!db.name) return res();
+        const req = indexedDB.deleteDatabase(db.name);
+        req.onsuccess = req.onblocked = req.onerror = () => res();
+      })));
+    }
+  } catch(e) { console.warn('indexedDB clear failed', e); }
+
+  // 3) Clear Cache Storage (caches)
+  try {
+    if ('caches' in window) {
+      const keys = await caches.keys();
+      await Promise.all(keys.map(k => caches.delete(k).catch(()=>{})));
+    }
+  } catch(e) { console.warn('cache storage clear failed', e); }
+
+  // 4) Unregister Service Workers
+  try {
+    if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) {
+      const regs = await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r => r.unregister().catch(()=>{})));
+    }
+  } catch(e) { console.warn('service worker unregister failed', e); }
+
+  // 5) Aggressivo tentativo di cancellare cookie con varie combinazioni
+  function setExpiredCookie(name, path, domain) {
+    try {
+      let cookie = encodeURIComponent(name) + "=; Max-Age=0; path=" + (path||"/") + ";";
+      if (domain) cookie += " domain=" + domain + ";";
+      // SameSite=None e Secure aiutano nel contesto HTTPS (GitHub Pages è HTTPS)
+      cookie += " SameSite=None; Secure;";
+      document.cookie = cookie;
+      // fallback
+      document.cookie = encodeURIComponent(name) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=" + (path||"/") + (domain ? ("; domain=" + domain) : "") + ";";
+    } catch(e) { /* ignore */ }
+  }
+
+  function getPathCandidates() {
+    const p = location.pathname || "/";
+    const segs = p.split('/').filter(Boolean);
+    const paths = ['/'];
+    for (let i = 0; i < segs.length; i++) {
+      paths.push('/' + segs.slice(0, i+1).join('/'));
+    }
+    paths.push(p);
+    return Array.from(new Set(paths));
+  }
+
+  (function clearCookiesAggressive(){
+    try {
+      const raw = document.cookie || "";
+      if (!raw) return;
+      const cookies = raw.split(';').map(c => c.trim()).filter(Boolean);
+      const host = location.hostname;
+      const domainCandidates = [host, '.' + host];
+      const pathCandidates = getPathCandidates();
+
+      cookies.forEach(c => {
+        const name = c.split('=')[0];
+        // try multiple domain/path combos
+        pathCandidates.forEach(path => {
+          setExpiredCookie(name, path, null); // no domain
+          domainCandidates.forEach(dom => setExpiredCookie(name, path, dom));
+        });
+        // try with cookies encoded/decoded versions
+        try {
+          const dec = decodeURIComponent(name);
+          if (dec !== name) {
+            pathCandidates.forEach(path => {
+              setExpiredCookie(dec, path, null);
+              domainCandidates.forEach(dom => setExpiredCookie(dec, path, dom));
+            });
+          }
+        } catch(e){}
+      });
+    } catch(e) { console.warn('clearCookiesAggressive error', e); }
+  })();
+
+  // 6) Small wait to let operations settle
+  await wait(250);
+
+  // 7) Final safety: try to clear document.cookie again (some browsers may update)
+  try { 
+    // attempt to enumerate again and clear (best effort)
+    const raw2 = document.cookie || "";
+    if (raw2) {
+      raw2.split(';').map(c => c.trim()).forEach(c => {
+        const name = c.split('=')[0];
+        setExpiredCookie(name, '/', location.hostname);
+        setExpiredCookie(name, '/', '.' + location.hostname);
+        setExpiredCookie(name, '/', null);
       });
     }
+  } catch(e){}
 
-    // Pulisce i cookie
-    clearAllCookies();
+  // 8) Redirect con parametro unico per bypassare cache
+  const target = "https://www.google.com";
+  const sep = target.includes('?') ? '&' : '?';
+  const finalUrl = target + sep + '_t=' + Date.now();
 
-    // Prepara l'URL di destinazione con parametro univoco per evitare cache
-    var targetUrl = "https://www.facebook.com";
-    var uniqueParam = "_t=" + new Date().getTime();
-    var separator = targetUrl.includes("?") ? "&" : "?";
-    var finalUrl = targetUrl + separator + uniqueParam;
+  // Safety: se qualche operazione rimane in sospeso, forza redirect dopo 1500ms
+  const redirectPromise = new Promise(res => {
+    setTimeout(() => {
+      try { window.location.replace(finalUrl); } catch(e) { window.location.href = finalUrl; }
+      res();
+    }, 1500);
+  });
 
-    // Esegue il redirect (senza memorizzare nella cronologia del browser)
-    window.location.replace(finalUrl);
-  </script>
+  // se tutto è già pronto, redirect immediato
+  await redirectPromise;
+})();
+</script>
 </body>
 </html>
